@@ -15,10 +15,13 @@ run: clean all
 	@echo "🚀 Executing..."
 	./$(BIN)/$(EXECUTABLE)
 
-$(BIN)/$(EXECUTABLE): $(SRC)/*.cpp
+$(BIN)/$(EXECUTABLE): $(SRC)/*.cpp | $(BIN)
 	@echo "🚧 Building..."
 	$(CXX) $(CXX_FLAGS) -I$(INCLUDE) $^ -o $@
 
+$(BIN):
+	mkdir $(BIN)
+
 clean:
 	@echo "🧹 Clearing..."
-	-rm $(BIN)/*
+	-rm -r $(BIN)
