@@ -21,6 +21,8 @@ ClientHandler::ClientHandler(sockaddr_in serverAddress) : m_serverAddress{server
         exit(0);
     }
 
+    //TODO - do this elsewhere - not in constructor
+
     listen(m_serverSd, 5);
 
     sockaddr_in connectionAddress;
