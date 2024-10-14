@@ -4,7 +4,7 @@ RoutingTableEntry::RoutingTableEntry(std::string line) {
     interface = ReadNext(line);
     destination = IPv4Address(ReadNext(line));
     gateway = IPv4Address(ReadNext(line));
-    flags = ReadNext(line);
+    flags = (unsigned short) stoul(ReadNext(line));
     refCount = ReadNext(line);
     use = ReadNext(line);
     metric = ReadNext(line);
@@ -12,6 +12,11 @@ RoutingTableEntry::RoutingTableEntry(std::string line) {
     mtu = ReadNext(line);
     window = ReadNext(line);
     irtt = ReadNext(line);
+}
+
+bool RoutingTableEntry::IsUsable()
+{
+    return flags & 1;
 }
 
 std::string RoutingTableEntry::ReadNext(std::string& line) {

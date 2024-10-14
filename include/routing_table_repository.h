@@ -8,6 +8,5 @@ class RoutingTableRepository {
 private:
     static const std::string ROUTE_FILE_PATH;
 public:
-    static std::list<RoutingTableEntry*> GetEntries();
-    static void DeleteEntries(std::list<RoutingTableEntry*> entries);
+    std::list<RoutingTableEntry> GetEntries();
 };

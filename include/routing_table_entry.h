@@ -10,7 +10,7 @@ public:
     std::string interface;
     IPv4Address destination;
     IPv4Address gateway;
-    std::string flags;
+    unsigned short flags;
     std::string refCount;
     std::string use;
     std::string metric;
@@ -19,4 +19,5 @@ public:
     std::string window;
     std::string irtt;
     RoutingTableEntry(std::string line);
+    bool IsUsable();
 };
