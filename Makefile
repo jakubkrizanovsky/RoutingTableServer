@@ -10,7 +10,7 @@ EXECUTABLE  := main
 
 all: $(BIN)/$(EXECUTABLE)
 
-run: clean all
+run: all
 	clear
 	@echo "🚀 Executing..."
 	./$(BIN)/$(EXECUTABLE)
