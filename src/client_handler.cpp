@@ -1,6 +1,7 @@
 #include "client_handler.h"
 #include <iostream>
 #include <unistd.h>
+#include <thread>
 
 
 ClientHandler::ClientHandler(sockaddr_in serverAddress) : m_serverAddress{serverAddress}
@@ -35,7 +36,8 @@ ClientHandler::ClientHandler(sockaddr_in serverAddress) : m_serverAddress{server
             continue;
         }
 
-        HandleRequest(connectionSd);   
+        std::thread clientThread(&ClientHandler::HandleRequest, this, connectionSd);
+        clientThread.detach();
     }
 }
 
