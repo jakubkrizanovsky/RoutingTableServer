@@ -1,12 +1,12 @@
-#include "client_handler.h"
+#include "request_handler.h"
 #include <iostream>
 #include <unistd.h>
 #include <thread>
 
 
-ClientHandler::ClientHandler(sockaddr_in serverAddress) : m_serverAddress{serverAddress}
+RequestHandler::RequestHandler(sockaddr_in serverAddress) : m_serverAddress{serverAddress}
 {
-    //create socket
+    //Create socket
     m_serverSd = socket(AF_INET, SOCK_STREAM, 0);
     if(m_serverSd < 0)
     {
@@ -14,7 +14,7 @@ ClientHandler::ClientHandler(sockaddr_in serverAddress) : m_serverAddress{server
         exit(0);
     }
 
-    //bind the socket to its local address
+    //Bind the socket to its local address
     int bindStatus = bind(m_serverSd, (struct sockaddr*) &m_serverAddress, sizeof(m_serverAddress));
     if(bindStatus < 0)
     {
@@ -22,26 +22,13 @@ ClientHandler::ClientHandler(sockaddr_in serverAddress) : m_serverAddress{server
         exit(0);
     }
 
-    //TODO - do this elsewhere - not in constructor
+    std::cout << "Starting server" << std::endl;
 
+    //Listen for connections
     listen(m_serverSd, 5);
-
-    sockaddr_in connectionAddress;
-    socklen_t connectionAddressSize = sizeof(connectionAddress);
-
-    while(true) {
-        int connectionSd = accept(m_serverSd, (sockaddr *)&connectionAddress, &connectionAddressSize);
-        if(connectionSd < 0) {
-            std::cerr << "Error accepting request from client!" << std::endl;
-            continue;
-        }
-
-        std::thread clientThread(&ClientHandler::HandleRequest, this, connectionSd);
-        clientThread.detach();
-    }
 }
 
-void ClientHandler::HandleRequest(int connectionSd)
+void RequestHandler::HandleRequest(int connectionSd)
 {
     char buffer[1000];
     recv(connectionSd, (char*)&buffer, sizeof(buffer), 0);
@@ -58,7 +45,24 @@ void ClientHandler::HandleRequest(int connectionSd)
     close(connectionSd);
 }
 
-ClientHandler::~ClientHandler()
+RequestHandler::~RequestHandler()
 {
     close(m_serverSd);
+}
+
+void RequestHandler::HandleLoop()
+{
+    sockaddr_in connectionAddress;
+    socklen_t connectionAddressSize = sizeof(connectionAddress);
+
+    while(true) {
+        int connectionSd = accept(m_serverSd, (sockaddr *)&connectionAddress, &connectionAddressSize);
+        if(connectionSd < 0) {
+            std::cerr << "Error accepting request from client!" << std::endl;
+            continue;
+        }
+
+        std::thread clientThread(&RequestHandler::HandleRequest, this, connectionSd);
+        clientThread.detach();
+    }
 }

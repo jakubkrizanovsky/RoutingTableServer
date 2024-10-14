@@ -4,7 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-class ClientHandler
+class RequestHandler
 {
 private:
     sockaddr_in m_serverAddress;
@@ -13,6 +13,7 @@ private:
 
     void HandleRequest(int connectionSd);
 public:
-    ClientHandler(sockaddr_in serverAddress);
-    ~ClientHandler();
+    RequestHandler(sockaddr_in serverAddress);
+    ~RequestHandler();
+    void HandleLoop();
 };
