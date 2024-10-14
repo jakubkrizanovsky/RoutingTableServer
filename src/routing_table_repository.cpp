@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-const std::string RoutingTableRepository::ROUTE_FILE_PATH = "route.txt";
+const std::string RoutingTableRepository::ROUTE_FILE_PATH = "/proc/net/route";
 
 std::list<RoutingTableEntry> RoutingTableRepository::GetEntries()
 {
