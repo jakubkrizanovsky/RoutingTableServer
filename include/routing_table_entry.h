@@ -3,8 +3,7 @@
 #include <string>
 
 class RoutingTableEntry {
-private:
-    std::string m_interface;
 public:
+    std::string interface;
     RoutingTableEntry(std::string line);
 };

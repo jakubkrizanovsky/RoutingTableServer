@@ -2,11 +2,12 @@
 
 #include "routing_table_entry.h"
 #include <string>
-#include <queue>
+#include <list>
 
 class RoutingTableRepository {
 private:
-    const std::string ROUTE_FILE_PATH = "route.txt";
+    static const std::string ROUTE_FILE_PATH;
 public:
-    static std::queue<RoutingTableEntry> GetEntries();
+    static std::list<RoutingTableEntry*> GetEntries();
+    static void DeleteEntries(std::list<RoutingTableEntry*> entries);
 };

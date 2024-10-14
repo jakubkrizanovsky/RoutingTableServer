@@ -1,8 +1,12 @@
-#include "routing_table_repository.h"
+#include "routing_table_resource.h"
 #include <iostream>
+#include <string>
 
 int main() {
-    RoutingTableRepository::GetEntries();
-    std::cout << "Hello, world" << std::endl;
+    RoutingTableResource resource;
+
+    // std::queue<RoutingTableEntry*> entries = RoutingTableRepository::GetEntries();
+    std::string response = resource.GetResponse();
+    std::cout << response << std::endl;
     return 0;
 }

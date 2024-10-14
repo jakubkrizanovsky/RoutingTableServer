@@ -5,5 +5,5 @@
 
 class RoutingTableResource : public Resource {
 public:
-    std::string GetContext() override;
+    std::string GetResponse() override;
 };

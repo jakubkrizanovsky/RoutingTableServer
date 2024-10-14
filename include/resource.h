@@ -4,5 +4,5 @@
 
 class Resource {
 public:
-    virtual std::string GetContext() = 0;
+    virtual std::string GetResponse() = 0;
 };
